@@ -78,7 +78,7 @@ button{width:100%;padding:14px;border-radius:13px;border:1px solid var(--line);b
 </div>
 </section>
 
-<div class="footer">Bilgi Bombası v0.7</div>
+<div class="footer">Bilgi Bombası v0.8</div>
 </div>
 <script>
 
@@ -94,7 +94,10 @@ function playSound(src, volume=1){
     a.play().catch(()=>{});
   } catch(e) {}
 }
-function playClick(){ playSound(SOUND_CLICK, 0.9); }
+function playClick(){
+  playSound(SOUND_CLICK, 1.0);
+  setTimeout(()=>playSound(SOUND_CLICK, 0.75), 55);
+}
 function playCorrect(){ playSound(SOUND_CORRECT, 1.0); }
 function playWrong(){ playSound(SOUND_WRONG, 1.0); }
 function testSound(){
@@ -134,13 +137,10 @@ function finish(){
  else {$("resultTitle").textContent="🧠 Antrenman zamanı!";$("resultText").textContent="Oyun zaten öğrenmek için var. Bir tur daha."}
 }
 
-document.addEventListener("click", function(e){
+document.addEventListener("pointerdown", function(e){
   const btn = e.target.closest("button");
   if(!btn) return;
-
-  // Answer buttons already play their own click sound inside answer()
   if(btn.closest("#answers")) return;
-
   playClick();
 });
 
