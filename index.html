@@ -77,41 +77,55 @@ button{width:100%;padding:14px;border-radius:13px;border:1px solid var(--line);b
 </div>
 </section>
 
-<div class="footer">Bilgi Bombası v0.4</div>
+<div class="footer">Bilgi Bombası v0.5</div>
 </div>
 <script>
 
 let audioCtx = null;
-function getAudioCtx(){
+
+async function unlockAudio(){
   if(!audioCtx){
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
-  if(audioCtx.state === "suspended") audioCtx.resume();
+  if(audioCtx.state === "suspended"){
+    try { await audioCtx.resume(); } catch(e) {}
+  }
   return audioCtx;
 }
-function tone(freq, duration, type="sine", volume=0.05, delay=0){
-  const ctx = getAudioCtx();
+
+async function tone(freq, duration, type="sine", volume=0.12, delay=0){
+  const ctx = await unlockAudio();
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
+
   osc.type = type;
   osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+
   gain.gain.setValueAtTime(volume, ctx.currentTime + delay);
-  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    ctx.currentTime + delay + duration
+  );
+
   osc.connect(gain);
   gain.connect(ctx.destination);
+
   osc.start(ctx.currentTime + delay);
   osc.stop(ctx.currentTime + delay + duration);
 }
+
 function playClick(){
-  tone(520, 0.055, "square", 0.025);
+  tone(700, 0.06, "square", 0.07);
 }
+
 function playCorrect(){
-  tone(660, 0.10, "sine", 0.05, 0);
-  tone(880, 0.13, "sine", 0.05, 0.08);
+  tone(660, 0.12, "sine", 0.16, 0);
+  tone(990, 0.18, "sine", 0.14, 0.09);
 }
+
 function playWrong(){
-  tone(220, 0.12, "sawtooth", 0.035, 0);
-  tone(160, 0.16, "sawtooth", 0.03, 0.09);
+  tone(240, 0.16, "sawtooth", 0.11, 0);
+  tone(140, 0.22, "sawtooth", 0.10, 0.10);
 }
 
 const questions=[{"q": "Türkiye'nin başkenti aşağıdakilerden hangisidir?", "a": "Ankara", "o": ["Ankara", "Atina", "Sofya", "Tiflis"]}, {"q": "ABD'nin başkenti aşağıdakilerden hangisidir?", "a": "Washington, D.C.", "o": ["Washington, D.C.", "Ottawa", "Meksiko", "Havana"]}, {"q": "Birleşik Krallık'ın başkenti aşağıdakilerden hangisidir?", "a": "Londra", "o": ["Londra", "Dublin", "Amsterdam", "Brüksel"]}, {"q": "Fransa'nın başkenti aşağıdakilerden hangisidir?", "a": "Paris", "o": ["Paris", "Roma", "Madrid", "Lizbon"]}, {"q": "Almanya'nın başkenti aşağıdakilerden hangisidir?", "a": "Berlin", "o": ["Berlin", "Viyana", "Prag", "Varşova"]}, {"q": "İtalya'nın başkenti aşağıdakilerden hangisidir?", "a": "Roma", "o": ["Roma", "Paris", "Atina", "Madrid"]}, {"q": "İspanya'nın başkenti aşağıdakilerden hangisidir?", "a": "Madrid", "o": ["Madrid", "Lizbon", "Roma", "Paris"]}, {"q": "Rusya'nın başkenti aşağıdakilerden hangisidir?", "a": "Moskova", "o": ["Moskova", "Kiev", "Minsk", "Varşova"]}, {"q": "Çin'in başkenti aşağıdakilerden hangisidir?", "a": "Pekin", "o": ["Pekin", "Tokyo", "Seul", "Bangkok"]}, {"q": "Japonya'nın başkenti aşağıdakilerden hangisidir?", "a": "Tokyo", "o": ["Tokyo", "Pekin", "Seul", "Manila"]}, {"q": "Hindistan'ın başkenti aşağıdakilerden hangisidir?", "a": "Yeni Delhi", "o": ["Yeni Delhi", "İslamabad", "Dakka", "Katmandu"]}, {"q": "Kanada'nın başkenti aşağıdakilerden hangisidir?", "a": "Ottawa", "o": ["Ottawa", "Washington, D.C.", "Meksiko", "Kingston"]}, {"q": "Avustralya'nın başkenti aşağıdakilerden hangisidir?", "a": "Canberra", "o": ["Canberra", "Wellington", "Suva", "Port Moresby"]}, {"q": "Brezilya'nın başkenti aşağıdakilerden hangisidir?", "a": "Brasília", "o": ["Brasília", "Buenos Aires", "Lima", "Santiago"]}, {"q": "Meksika'nın başkenti aşağıdakilerden hangisidir?", "a": "Meksiko", "o": ["Meksiko", "Havana", "Guatemala", "San José"]}, {"q": "Güney Kore'nin başkenti aşağıdakilerden hangisidir?", "a": "Seul", "o": ["Seul", "Tokyo", "Pekin", "Pyongyang"]}, {"q": "Yunanistan'ın başkenti aşağıdakilerden hangisidir?", "a": "Atina", "o": ["Atina", "Sofya", "Tiran", "Üsküp"]}, {"q": "Mısır'ın başkenti aşağıdakilerden hangisidir?", "a": "Kahire", "o": ["Kahire", "Trablus", "Hartum", "Amman"]}, {"q": "Hollanda'nın başkenti aşağıdakilerden hangisidir?", "a": "Amsterdam", "o": ["Amsterdam", "Brüksel", "Lüksemburg", "Kopenhag"]}, {"q": "İsviçre'nin başkenti aşağıdakilerden hangisidir?", "a": "Bern", "o": ["Bern", "Viyana", "Vaduz", "Prag"]}, {"q": "İsveç'in başkenti aşağıdakilerden hangisidir?", "a": "Stockholm", "o": ["Stockholm", "Oslo", "Helsinki", "Kopenhag"]}, {"q": "Norveç'in başkenti aşağıdakilerden hangisidir?", "a": "Oslo", "o": ["Oslo", "Stockholm", "Helsinki", "Reykjavik"]}, {"q": "Portekiz'in başkenti aşağıdakilerden hangisidir?", "a": "Lizbon", "o": ["Lizbon", "Madrid", "Paris", "Roma"]}, {"q": "Arjantin'in başkenti aşağıdakilerden hangisidir?", "a": "Buenos Aires", "o": ["Buenos Aires", "Montevideo", "Santiago", "Asunción"]}, {"q": "Suudi Arabistan'ın başkenti aşağıdakilerden hangisidir?", "a": "Riyad", "o": ["Riyad", "Doha", "Kuveyt", "Maskat"]}, {"q": "İran'ın başkenti aşağıdakilerden hangisidir?", "a": "Tahran", "o": ["Tahran", "Bağdat", "Kabil", "Bakü"]}, {"q": "Irak'ın başkenti aşağıdakilerden hangisidir?", "a": "Bağdat", "o": ["Bağdat", "Tahran", "Şam", "Amman"]}, {"q": "İsrail'in başkenti aşağıdakilerden hangisidir?", "a": "Kudüs", "o": ["Kudüs", "Amman", "Beyrut", "Şam"]}, {"q": "Ukrayna'nın başkenti aşağıdakilerden hangisidir?", "a": "Kiev", "o": ["Kiev", "Minsk", "Kişinev", "Bükreş"]}, {"q": "Polonya'nın başkenti aşağıdakilerden hangisidir?", "a": "Varşova", "o": ["Varşova", "Prag", "Bratislava", "Budapeşte"]}];
@@ -121,7 +135,7 @@ function sync(){$("xp").textContent=state.xp;$("streak").textContent=state.strea
 function show(id){["home","world","quizsec","result"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden")}
 function openWorld(){show("world")}
 function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
-function startQuiz(){state.score=0;state.index=0;state.streak=0;state.locked=false;state.order=shuffle(questions.map((_,i)=>i));sync();show("quizsec");render()}
+async function startQuiz(){await unlockAudio();state.score=0;state.index=0;state.streak=0;state.locked=false;state.order=shuffle(questions.map((_,i)=>i));sync();show("quizsec");render()}
 function render(){
  const item=questions[state.order[state.index]];
  $("counter").textContent=`Soru ${state.index+1}/${questions.length}`;
