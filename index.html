@@ -78,7 +78,7 @@ button{width:100%;padding:14px;border-radius:13px;border:1px solid var(--line);b
 </div>
 </section>
 
-<div class="footer">Bilgi Bombası v0.6</div>
+<div class="footer">Bilgi Bombası v0.7</div>
 </div>
 <script>
 
@@ -133,6 +133,17 @@ function finish(){
  else if(state.score>=20){$("resultTitle").textContent="💪 İyi gidiyor!";$("resultText").textContent="Tekrar ettikçe taş gibi oturacak."}
  else {$("resultTitle").textContent="🧠 Antrenman zamanı!";$("resultText").textContent="Oyun zaten öğrenmek için var. Bir tur daha."}
 }
+
+document.addEventListener("click", function(e){
+  const btn = e.target.closest("button");
+  if(!btn) return;
+
+  // Answer buttons already play their own click sound inside answer()
+  if(btn.closest("#answers")) return;
+
+  playClick();
+});
+
 sync();
 </script>
 </body>
