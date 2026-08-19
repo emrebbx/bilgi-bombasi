@@ -7,131 +7,158 @@
 
 <style>
 :root{
-  --bg1:#07111f;
-  --bg2:#0b1730;
-  --panel:#111d33;
-  --panel2:#18253f;
-  --line:#2c4163;
-  --text:#f8fbff;
-  --muted:#93a4bd;
-  --accent:#ffb11b;
-  --accent2:#ff7a00;
-  --cyan:#36c5f0;
-  --good:#27d17f;
-  --bad:#ff5c6c;
-  --shadow:0 18px 50px rgba(0,0,0,.32);
+  --ink:#19233a;
+  --sky1:#78d8ff;
+  --sky2:#b9efff;
+  --panel:#ffffff;
+  --yellow:#ffd84a;
+  --orange:#ff9f2d;
+  --blue:#4da8ff;
+  --blue2:#2876e8;
+  --green:#58d36e;
+  --green2:#2fa84a;
+  --red:#ff6b6b;
+  --purple:#9b7cff;
+  --shadow:#22314f;
 }
 *{box-sizing:border-box}
 body{
   margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
   min-height:100vh;
-  color:var(--text);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:
-    radial-gradient(circle at 15% 0%, rgba(54,197,240,.15), transparent 28%),
-    radial-gradient(circle at 100% 15%, rgba(255,177,27,.14), transparent 28%),
-    linear-gradient(180deg,var(--bg2),var(--bg1) 55%,#030712);
+    radial-gradient(circle at 12% 12%,rgba(255,255,255,.95) 0 42px,transparent 43px),
+    radial-gradient(circle at 78% 8%,rgba(255,255,255,.8) 0 30px,transparent 31px),
+    linear-gradient(180deg,var(--sky1),var(--sky2) 55%,#eafcff);
 }
 body:before{
   content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background-image:
-    linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-  background-size:32px 32px;
-  mask-image:linear-gradient(to bottom,black,transparent 75%);
+  position:fixed; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(255,255,255,.45) 0 4px,transparent 5px),
+    radial-gradient(circle at 80% 40%,rgba(255,255,255,.35) 0 3px,transparent 4px);
+  background-size:120px 120px,160px 160px;
 }
-.wrap{max-width:920px;margin:auto;padding:24px 22px 40px;position:relative}
+.wrap{max-width:940px;margin:auto;padding:22px 18px 42px;position:relative}
 .hero{
-  display:flex;
-  justify-content:space-between;
-  gap:18px;
-  align-items:flex-start;
-  margin:8px 0 20px;
+  display:flex;justify-content:space-between;gap:16px;align-items:center;
+  background:rgba(255,255,255,.84);
+  border:4px solid #fff;
+  border-radius:28px;
+  padding:16px 18px;
+  box-shadow:0 8px 0 #7ebbd2,0 16px 30px rgba(38,78,103,.16);
 }
 .brand-wrap{display:flex;align-items:center;gap:14px}
 .logo{
-  width:58px;height:58px;border-radius:18px;
-  display:grid;place-items:center;font-size:30px;
-  background:linear-gradient(145deg,var(--accent),var(--accent2));
-  box-shadow:0 10px 30px rgba(255,145,0,.25), inset 0 1px 0 rgba(255,255,255,.3);
+  width:68px;height:68px;border-radius:22px;
+  display:grid;place-items:center;font-size:38px;
+  background:linear-gradient(#ffe76b,#ffb52f);
+  border:4px solid #fff5b6;
+  box-shadow:0 7px 0 #d8891a,0 11px 20px rgba(0,0,0,.12);
+  transform:rotate(-5deg)
 }
-h1{font-size:38px;line-height:1;margin:4px 0 7px;letter-spacing:.2px}
-.sub{color:var(--muted);margin:0}
+h1{margin:0;font-size:40px;line-height:1;font-weight:950;letter-spacing:-1px}
+.sub{margin:5px 0 0;color:#5a6a85;font-weight:700}
 .level-box{
-  min-width:170px;padding:13px 15px;border:1px solid var(--line);
-  background:rgba(17,29,51,.84);backdrop-filter:blur(10px);
-  border-radius:16px;box-shadow:var(--shadow)
+  min-width:220px;
+  background:#eef7ff;border:3px solid #fff;border-radius:20px;
+  padding:12px 14px;
+  box-shadow:0 6px 0 #aacde3;
 }
-.level-top{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:7px}
-.level-box b{color:var(--text)}
-.xpbar{height:9px;background:#0b1323;border-radius:999px;overflow:hidden;border:1px solid #263a58}
-.xpfill{height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0%;transition:.3s}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-.stat,.card,.quiz,.mission{
-  background:linear-gradient(180deg,rgba(18,31,54,.96),rgba(12,23,41,.96));
-  border:1px solid var(--line);
-  border-radius:20px;
-  box-shadow:var(--shadow);
+.level-top{display:flex;justify-content:space-between;font-size:13px;font-weight:800;margin-bottom:7px}
+.xpbar{height:16px;background:#dce9f5;border:3px solid #c5d7e7;border-radius:999px;overflow:hidden}
+.xpfill{height:100%;background:linear-gradient(90deg,#ffb72f,#ffe14d);width:0%}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat{
+  background:white;border:4px solid white;border-radius:22px;text-align:center;padding:14px 10px;
+  box-shadow:0 7px 0 #9dc2d6,0 12px 20px rgba(40,80,100,.10)
 }
-.stat{padding:16px 14px;text-align:center;position:relative;overflow:hidden}
-.stat:after{content:"";position:absolute;inset:auto -25px -35px auto;width:80px;height:80px;border-radius:50%;background:rgba(54,197,240,.06)}
-.stat b{display:block;font-size:26px}.stat span{font-size:12px;color:var(--muted)}
-.mission{padding:16px 18px;margin:0 0 18px;display:flex;justify-content:space-between;gap:15px;align-items:center}
-.mission-title{font-weight:800;margin-bottom:4px}.mission small{color:var(--muted)}
-.mission-pill{white-space:nowrap;padding:8px 11px;border-radius:999px;background:rgba(255,177,27,.12);border:1px solid rgba(255,177,27,.34);color:#ffd36f;font-size:12px;font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-.card{padding:20px;position:relative;overflow:hidden;transition:.18s transform,.18s border-color}
-.card:hover{transform:translateY(-2px);border-color:#49658e}
-.card:before{content:"";position:absolute;right:-25px;top:-25px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.025)}
-.card h3{font-size:21px;margin:0 0 7px}.card p{margin:0 0 15px;color:var(--muted);line-height:1.45}
-.card-icon{font-size:34px;margin-bottom:12px}
-.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,177,27,.10);border:1px solid rgba(255,177,27,.28);color:#ffd979;font-size:12px;font-weight:700;margin-bottom:14px}
-.progress-line{height:7px;background:#0c1525;border-radius:999px;overflow:hidden;margin:3px 0 7px}
-.progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),#6ee7ff)}
-.card-foot{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:14px}
+.stat:nth-child(1){background:#fff6c9;box-shadow:0 7px 0 #d9bd4a}
+.stat:nth-child(2){background:#d9f7df;box-shadow:0 7px 0 #74bb83}
+.stat:nth-child(3){background:#e6e1ff;box-shadow:0 7px 0 #8d7fd0}
+.stat b{display:block;font-size:28px;font-weight:950}.stat span{font-size:12px;font-weight:800;color:#62708a}
+.mission{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  background:#fff2b8;border:4px solid #fff7d4;border-radius:22px;
+  padding:14px 16px;box-shadow:0 7px 0 #d3a635;margin:16px 0 18px
+}
+.mission-title{font-size:18px;font-weight:950}.mission small{font-weight:700;color:#6d5a22}
+.mission-pill{
+  background:#ffcf3e;border:3px solid #fff099;border-radius:999px;
+  padding:8px 12px;font-size:12px;font-weight:950;white-space:nowrap
+}
+.section-title{font-weight:950;text-transform:uppercase;letter-spacing:.9px;margin:14px 4px 10px;color:#41506d}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+  position:relative;overflow:hidden;
+  border:4px solid white;border-radius:28px;padding:18px;
+  box-shadow:0 9px 0 rgba(56,86,120,.30),0 16px 24px rgba(51,87,117,.10)
+}
+.card:nth-child(1){background:linear-gradient(180deg,#d9f4ff,#bfe9ff)}
+.card:nth-child(2){background:linear-gradient(180deg,#ffe0e0,#ffc7c7)}
+.card:nth-child(3){background:linear-gradient(180deg,#ffeac7,#ffd79c)}
+.card:nth-child(4){background:linear-gradient(180deg,#e7ddff,#d3c4ff)}
+.card-icon{
+  width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-size:34px;
+  background:white;border:3px solid rgba(255,255,255,.9);box-shadow:0 5px 0 rgba(70,90,120,.18);
+  margin-bottom:12px
+}
+.card h3{font-size:25px;margin:0 0 6px;font-weight:950}
+.card p{margin:0 0 13px;color:#53627c;font-weight:700;line-height:1.4}
+.progress-line{height:12px;background:rgba(255,255,255,.65);border:3px solid rgba(255,255,255,.85);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#4da8ff,#66e0ff);border-radius:999px}
+.card-foot{display:flex;justify-content:space-between;font-size:12px;font-weight:900;color:#5d6b83;margin:6px 0 12px}
+.badge{
+  display:inline-block;background:#fff7b7;border:3px solid white;border-radius:999px;
+  padding:6px 10px;font-size:12px;font-weight:950;box-shadow:0 3px 0 #d0b546;margin-bottom:12px
+}
 button{
-  width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);
-  background:#1c2a44;color:var(--text);font-size:15px;font-weight:700;cursor:pointer;
-  transition:.15s transform,.15s filter,.15s border-color;
+  width:100%;border:0;border-radius:18px;padding:15px 16px;
+  font-size:16px;font-weight:950;cursor:pointer;color:#172036;
+  transition:transform .06s,filter .1s;
+  box-shadow:0 6px 0 #c27b11,0 9px 15px rgba(0,0,0,.12)
 }
-button:hover{filter:brightness(1.08);border-color:#526d94}
-button:active{transform:scale(.985)}
-.primary{
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#141414;border:0;font-weight:900;box-shadow:0 8px 24px rgba(255,145,0,.18)
-}
-.secondary{background:transparent}
-.hero-play{margin-bottom:16px;font-size:17px;padding:16px}
+button:active{transform:translateY(4px);box-shadow:0 2px 0 #b66e09}
+.primary{background:linear-gradient(#ffd84b,#ffa733)}
+.secondary{background:#fff;box-shadow:0 6px 0 #a9bdd0;border:3px solid #eef6ff}
+.hero-play{font-size:18px;padding:17px}
 .hidden{display:none}
-.quiz{padding:22px}
-.top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px}
-.progress{height:11px;background:#0d1626;border-radius:99px;overflow:hidden;margin:13px 0 4px;border:1px solid #243754}
-.bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),#79e6ff);transition:.25s}
-.question-card{
-  margin-top:18px;padding:20px;border-radius:18px;
-  background:linear-gradient(180deg,#15243d,#101d31);
-  border:1px solid #2e4568
+.quiz{
+  background:#ffffff;border:5px solid #fff;border-radius:28px;padding:20px;
+  box-shadow:0 10px 0 #8bb8cf,0 18px 30px rgba(50,87,112,.15)
 }
-.question{font-size:25px;font-weight:850;margin:0;line-height:1.3}
-.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:16px}
-.answers button{min-height:64px;text-align:left;padding:15px 16px;background:#17243a}
-.good{background:rgba(39,209,127,.18)!important;border-color:var(--good)!important;box-shadow:0 0 0 1px rgba(39,209,127,.12),0 0 28px rgba(39,209,127,.12)}
-.bad{background:rgba(255,92,108,.16)!important;border-color:var(--bad)!important;animation:shake .2s linear 2}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.result{text-align:center;padding:28px 22px}
-.big{font-size:58px;font-weight:950;letter-spacing:-1px;margin:5px 0}
-.reward{display:inline-block;margin:5px 0 16px;padding:8px 12px;border-radius:999px;background:rgba(255,177,27,.12);border:1px solid rgba(255,177,27,.3);color:#ffd36f;font-weight:800}
-.footer{text-align:center;color:#5d718f;font-size:12px;margin-top:28px}
-.section-title{font-size:14px;color:#7f93ae;text-transform:uppercase;letter-spacing:1.3px;font-weight:800;margin:10px 0}
+.top{display:flex;justify-content:space-between;font-weight:900;color:#60708a}
+.progress{height:16px;background:#dfeaf4;border:3px solid #c9d9e6;border-radius:999px;overflow:hidden;margin:12px 0 4px}
+.bar{height:100%;background:linear-gradient(90deg,#4ba7ff,#60dfff)}
+.question-card{
+  margin-top:16px;background:#eef7ff;border:4px solid #fff;border-radius:24px;padding:18px;
+  box-shadow:inset 0 0 0 3px #d8e9f6
+}
+.question{font-size:26px;font-weight:950;line-height:1.3;margin:0}
+.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.answers button{
+  background:#ffffff;
+  box-shadow:0 6px 0 #b8c9d9;
+  border:3px solid #e6eef6;
+  text-align:left;
+  min-height:66px;
+}
+.answers button:active{box-shadow:0 2px 0 #aebfce}
+.good{background:#c8f3d1!important;border-color:#7bd58b!important;box-shadow:0 6px 0 #48a75d!important}
+.bad{background:#ffd1d1!important;border-color:#ff8f8f!important;box-shadow:0 6px 0 #d95454!important;animation:shake .18s linear 2}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.result{text-align:center}
+.big{font-size:62px;font-weight:950}
+.reward{display:inline-block;background:#fff1a8;border:4px solid #fff8d0;border-radius:999px;padding:8px 13px;font-weight:950;box-shadow:0 5px 0 #d1b43a;margin-bottom:10px}
+.footer{text-align:center;margin-top:28px;color:#4f6680;font-size:12px;font-weight:900}
 @media(max-width:700px){
-  .wrap{padding:16px}
+  .wrap{padding:14px}
   .hero{display:block}.level-box{margin-top:14px}
-  h1{font-size:31px}.grid{grid-template-columns:1fr}
-  .stats{gap:8px}.stat{padding:12px}
-  .answers{grid-template-columns:1fr}.question{font-size:21px}
+  h1{font-size:32px}.grid{grid-template-columns:1fr}
+  .stats{gap:8px}.stat{padding:12px 8px}
+  .answers{grid-template-columns:1fr}
+  .question{font-size:22px}
 }
 </style>
 
@@ -147,15 +174,15 @@ button:active{transform:scale(.985)}
       </div>
     </div>
     <div class="level-box">
-      <div class="level-top"><span id="levelText">Seviye 1</span><b id="levelXp">0 / 500 XP</b></div>
+      <div class="level-top"><span id="levelText">Seviye 1</span><span id="levelXp">0 / 500 XP</span></div>
       <div class="xpbar"><div class="xpfill" id="xpfill"></div></div>
     </div>
   </div>
 
   <div class="stats">
-    <div class="stat"><b id="xp">0</b><span>Toplam XP</span></div>
-    <div class="stat"><b id="streak">0</b><span>Doğru Seri</span></div>
-    <div class="stat"><b id="best">0</b><span>En İyi Seri</span></div>
+    <div class="stat"><b id="xp">0</b><span>TOPLAM XP</span></div>
+    <div class="stat"><b id="streak">0</b><span>DOĞRU SERİ</span></div>
+    <div class="stat"><b id="best">0</b><span>EN İYİ SERİ</span></div>
   </div>
 
   <section id="home">
@@ -164,13 +191,12 @@ button:active{transform:scale(.985)}
     <div class="mission">
       <div>
         <div class="mission-title">🎯 Günlük Görev</div>
-        <small>Bugün en az 30 soru çöz ve seriyi bozma.</small>
+        <small>Bugün 30 soru çöz ve seriyi koru.</small>
       </div>
-      <div class="mission-pill">+300 XP hedefi</div>
+      <div class="mission-pill">+300 XP</div>
     </div>
 
-    <div class="section-title">Öğrenme Alanları</div>
-
+    <div class="section-title">Oyun Dünyaları</div>
     <div class="grid">
       <div class="card">
         <div class="card-icon">🌍</div>
@@ -178,7 +204,7 @@ button:active{transform:scale(.985)}
         <p>Başkentler, bayraklar, ülkeler ve daha fazlası.</p>
         <div class="progress-line"><div class="progress-fill" style="width:18%"></div></div>
         <div class="card-foot"><span>İlerleme</span><span>%18</span></div>
-        <span class="badge">İlk bölüm açık</span>
+        <span class="badge">⭐ İlk bölüm açık</span>
         <button class="primary" onclick="openWorld()">DÜNYAYA GİR →</button>
       </div>
 
@@ -188,7 +214,7 @@ button:active{transform:scale(.985)}
         <p>İller, plakalar, ilçeler ve harita konumları.</p>
         <div class="progress-line"><div class="progress-fill" style="width:4%"></div></div>
         <div class="card-foot"><span>İlerleme</span><span>%4</span></div>
-        <span class="badge">Yakında</span>
+        <span class="badge">🔒 Yakında</span>
       </div>
 
       <div class="card">
@@ -197,7 +223,7 @@ button:active{transform:scale(.985)}
         <p>Türk tarihi, Osmanlı, Cumhuriyet ve dünya tarihi.</p>
         <div class="progress-line"><div class="progress-fill" style="width:0%"></div></div>
         <div class="card-foot"><span>İlerleme</span><span>%0</span></div>
-        <span class="badge">Yakında</span>
+        <span class="badge">🔒 Yakında</span>
       </div>
 
       <div class="card">
@@ -206,13 +232,13 @@ button:active{transform:scale(.985)}
         <p>Filmler, oyuncular, yönetmenler ve sinema kültürü.</p>
         <div class="progress-line"><div class="progress-fill" style="width:0%"></div></div>
         <div class="card-foot"><span>İlerleme</span><span>%0</span></div>
-        <span class="badge">Yakında</span>
+        <span class="badge">🔒 Yakında</span>
       </div>
     </div>
   </section>
 
   <section id="world" class="hidden">
-    <div class="section-title">Dünya / Başkentler</div>
+    <div class="section-title">🌍 Dünya / Başkentler</div>
     <div class="card">
       <div class="card-icon">🌐</div>
       <h3>Başkentler — Test 01</h3>
@@ -222,7 +248,7 @@ button:active{transform:scale(.985)}
       <span class="badge">🏆 Başkentler Ustası</span>
       <button class="primary" onclick="startQuiz()">TESTE GİR →</button>
     </div>
-    <button class="secondary" onclick="show('home')">← Ana menü</button>
+    <button class="secondary" onclick="show('home')">← ANA MENÜ</button>
   </section>
 
   <section id="quizsec" class="hidden">
@@ -238,18 +264,18 @@ button:active{transform:scale(.985)}
 
   <section id="result" class="hidden">
     <div class="quiz result">
-      <div class="section-title">Test Tamamlandı</div>
+      <div class="section-title">🎉 Test Tamamlandı</div>
       <div class="big" id="finalScore"></div>
       <div class="reward" id="rewardXp">+0 XP</div>
       <h2 id="resultTitle"></h2>
       <p class="sub" id="resultText"></p>
       <button class="primary" onclick="startQuiz()">TEKRAR OYNA</button>
       <div style="height:10px"></div>
-      <button class="secondary" onclick="openWorld()">Testlere Dön</button>
+      <button class="secondary" onclick="openWorld()">TESTLERE DÖN</button>
     </div>
   </section>
 
-  <div class="footer">Bilgi Bombası v1.0</div>
+  <div class="footer">Bilgi Bombası v1.1 CARTOON</div>
 </div>
 <script>
 
@@ -307,7 +333,7 @@ function answer(btn,selected,correct){
  setTimeout(()=>{state.index++; if(state.index<questions.length)render(); else finish()},650)
 }
 function finish(){
- show("result");$("finalScore").textContent=`${state.score}/${questions.length}`;$("rewardXp").textContent=`+${state.xp-state.startXp} XP`;
+ show("result");$("finalScore").textContent=`${state.score}/${questions.length}`; if($("rewardXp")) $("rewardXp").textContent=`+${state.xp-state.startXp} XP`;
  if(state.score===questions.length){$("resultTitle").textContent="🏆 BAŞKENTLER USTASI!";$("resultText").textContent="30/30. Boss temizlendi."}
  else if(state.score>=27){$("resultTitle").textContent="🔥 Çok iyi!";$("resultText").textContent="Kusursuz skora çok az kaldı."}
  else if(state.score>=20){$("resultTitle").textContent="💪 İyi gidiyor!";$("resultText").textContent="Tekrar ettikçe taş gibi oturacak."}
