@@ -77,9 +77,43 @@ button{width:100%;padding:14px;border-radius:13px;border:1px solid var(--line);b
 </div>
 </section>
 
-<div class="footer">Bilgi Bombası v0.3</div>
+<div class="footer">Bilgi Bombası v0.4</div>
 </div>
 <script>
+
+let audioCtx = null;
+function getAudioCtx(){
+  if(!audioCtx){
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if(audioCtx.state === "suspended") audioCtx.resume();
+  return audioCtx;
+}
+function tone(freq, duration, type="sine", volume=0.05, delay=0){
+  const ctx = getAudioCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+  gain.gain.setValueAtTime(volume, ctx.currentTime + delay);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + delay + duration);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(ctx.currentTime + delay);
+  osc.stop(ctx.currentTime + delay + duration);
+}
+function playClick(){
+  tone(520, 0.055, "square", 0.025);
+}
+function playCorrect(){
+  tone(660, 0.10, "sine", 0.05, 0);
+  tone(880, 0.13, "sine", 0.05, 0.08);
+}
+function playWrong(){
+  tone(220, 0.12, "sawtooth", 0.035, 0);
+  tone(160, 0.16, "sawtooth", 0.03, 0.09);
+}
+
 const questions=[{"q": "Türkiye'nin başkenti aşağıdakilerden hangisidir?", "a": "Ankara", "o": ["Ankara", "Atina", "Sofya", "Tiflis"]}, {"q": "ABD'nin başkenti aşağıdakilerden hangisidir?", "a": "Washington, D.C.", "o": ["Washington, D.C.", "Ottawa", "Meksiko", "Havana"]}, {"q": "Birleşik Krallık'ın başkenti aşağıdakilerden hangisidir?", "a": "Londra", "o": ["Londra", "Dublin", "Amsterdam", "Brüksel"]}, {"q": "Fransa'nın başkenti aşağıdakilerden hangisidir?", "a": "Paris", "o": ["Paris", "Roma", "Madrid", "Lizbon"]}, {"q": "Almanya'nın başkenti aşağıdakilerden hangisidir?", "a": "Berlin", "o": ["Berlin", "Viyana", "Prag", "Varşova"]}, {"q": "İtalya'nın başkenti aşağıdakilerden hangisidir?", "a": "Roma", "o": ["Roma", "Paris", "Atina", "Madrid"]}, {"q": "İspanya'nın başkenti aşağıdakilerden hangisidir?", "a": "Madrid", "o": ["Madrid", "Lizbon", "Roma", "Paris"]}, {"q": "Rusya'nın başkenti aşağıdakilerden hangisidir?", "a": "Moskova", "o": ["Moskova", "Kiev", "Minsk", "Varşova"]}, {"q": "Çin'in başkenti aşağıdakilerden hangisidir?", "a": "Pekin", "o": ["Pekin", "Tokyo", "Seul", "Bangkok"]}, {"q": "Japonya'nın başkenti aşağıdakilerden hangisidir?", "a": "Tokyo", "o": ["Tokyo", "Pekin", "Seul", "Manila"]}, {"q": "Hindistan'ın başkenti aşağıdakilerden hangisidir?", "a": "Yeni Delhi", "o": ["Yeni Delhi", "İslamabad", "Dakka", "Katmandu"]}, {"q": "Kanada'nın başkenti aşağıdakilerden hangisidir?", "a": "Ottawa", "o": ["Ottawa", "Washington, D.C.", "Meksiko", "Kingston"]}, {"q": "Avustralya'nın başkenti aşağıdakilerden hangisidir?", "a": "Canberra", "o": ["Canberra", "Wellington", "Suva", "Port Moresby"]}, {"q": "Brezilya'nın başkenti aşağıdakilerden hangisidir?", "a": "Brasília", "o": ["Brasília", "Buenos Aires", "Lima", "Santiago"]}, {"q": "Meksika'nın başkenti aşağıdakilerden hangisidir?", "a": "Meksiko", "o": ["Meksiko", "Havana", "Guatemala", "San José"]}, {"q": "Güney Kore'nin başkenti aşağıdakilerden hangisidir?", "a": "Seul", "o": ["Seul", "Tokyo", "Pekin", "Pyongyang"]}, {"q": "Yunanistan'ın başkenti aşağıdakilerden hangisidir?", "a": "Atina", "o": ["Atina", "Sofya", "Tiran", "Üsküp"]}, {"q": "Mısır'ın başkenti aşağıdakilerden hangisidir?", "a": "Kahire", "o": ["Kahire", "Trablus", "Hartum", "Amman"]}, {"q": "Hollanda'nın başkenti aşağıdakilerden hangisidir?", "a": "Amsterdam", "o": ["Amsterdam", "Brüksel", "Lüksemburg", "Kopenhag"]}, {"q": "İsviçre'nin başkenti aşağıdakilerden hangisidir?", "a": "Bern", "o": ["Bern", "Viyana", "Vaduz", "Prag"]}, {"q": "İsveç'in başkenti aşağıdakilerden hangisidir?", "a": "Stockholm", "o": ["Stockholm", "Oslo", "Helsinki", "Kopenhag"]}, {"q": "Norveç'in başkenti aşağıdakilerden hangisidir?", "a": "Oslo", "o": ["Oslo", "Stockholm", "Helsinki", "Reykjavik"]}, {"q": "Portekiz'in başkenti aşağıdakilerden hangisidir?", "a": "Lizbon", "o": ["Lizbon", "Madrid", "Paris", "Roma"]}, {"q": "Arjantin'in başkenti aşağıdakilerden hangisidir?", "a": "Buenos Aires", "o": ["Buenos Aires", "Montevideo", "Santiago", "Asunción"]}, {"q": "Suudi Arabistan'ın başkenti aşağıdakilerden hangisidir?", "a": "Riyad", "o": ["Riyad", "Doha", "Kuveyt", "Maskat"]}, {"q": "İran'ın başkenti aşağıdakilerden hangisidir?", "a": "Tahran", "o": ["Tahran", "Bağdat", "Kabil", "Bakü"]}, {"q": "Irak'ın başkenti aşağıdakilerden hangisidir?", "a": "Bağdat", "o": ["Bağdat", "Tahran", "Şam", "Amman"]}, {"q": "İsrail'in başkenti aşağıdakilerden hangisidir?", "a": "Kudüs", "o": ["Kudüs", "Amman", "Beyrut", "Şam"]}, {"q": "Ukrayna'nın başkenti aşağıdakilerden hangisidir?", "a": "Kiev", "o": ["Kiev", "Minsk", "Kişinev", "Bükreş"]}, {"q": "Polonya'nın başkenti aşağıdakilerden hangisidir?", "a": "Varşova", "o": ["Varşova", "Prag", "Bratislava", "Budapeşte"]}];
 let state={xp:Number(localStorage.getItem("bb_xp")||0),best:Number(localStorage.getItem("bb_best")||0),streak:0,score:0,index:0,locked:false,order:[]};
 const $=id=>document.getElementById(id);
@@ -98,10 +132,10 @@ function render(){
  shuffle(item.o).forEach(opt=>{const b=document.createElement("button");b.textContent=opt;b.onclick=()=>answer(b,opt,item.a);box.appendChild(b)})
 }
 function answer(btn,selected,correct){
- if(state.locked)return;state.locked=true;
+ if(state.locked)return; playClick(); state.locked=true;
  [...$("answers").children].forEach(b=>{if(b.textContent===correct)b.classList.add("good")});
- if(selected===correct){state.score++;state.streak++;state.xp+=10;btn.classList.add("good");if(state.streak>state.best){state.best=state.streak;localStorage.setItem("bb_best",state.best)}localStorage.setItem("bb_xp",state.xp)}
- else{state.streak=0;btn.classList.add("bad")}
+ if(selected===correct){playCorrect();state.score++;state.streak++;state.xp+=10;btn.classList.add("good");if(state.streak>state.best){state.best=state.streak;localStorage.setItem("bb_best",state.best)}localStorage.setItem("bb_xp",state.xp)}
+ else{playWrong();state.streak=0;btn.classList.add("bad")}
  sync();
  setTimeout(()=>{state.index++; if(state.index<questions.length)render(); else finish()},650)
 }
