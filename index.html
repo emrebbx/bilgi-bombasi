@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bilgi Bombası</title>
+<style>
+  :root{
+    --bg:#0f172a;
+    --panel:#111827;
+    --panel2:#1f2937;
+    --text:#f8fafc;
+    --muted:#94a3b8;
+    --accent:#f59e0b;
+    --good:#22c55e;
+    --bad:#ef4444;
+    --line:#334155;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:linear-gradient(180deg,#0f172a,#020617);
+    color:var(--text);
+    min-height:100vh;
+  }
+  .wrap{max-width:760px;margin:auto;padding:20px}
+  .brand{font-size:34px;font-weight:900;letter-spacing:.5px;margin:8px 0}
+  .sub{color:var(--muted);margin-bottom:20px}
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px
+  }
+  .stat,.card,.quizbox{
+    background:rgba(17,24,39,.94);
+    border:1px solid var(--line);
+    border-radius:18px;
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+  }
+  .stat{padding:14px;text-align:center}
+  .stat b{display:block;font-size:22px}
+  .stat span{font-size:12px;color:var(--muted)}
+  .grid{display:grid;gap:12px}
+  .card{padding:18px;cursor:pointer;transition:.15s}
+  .card:hover{transform:translateY(-2px);border-color:#64748b}
+  .card h3{margin:0 0 6px}
+  .card p{margin:0;color:var(--muted)}
+  .playbtn{margin-top:14px;background:var(--accent);color:#111827;border:none;font-weight:900;text-align:center;font-size:15px;padding:13px;border-radius:12px;width:100%}
+  .playbtn:hover{filter:brightness(1.05)}
+  .badge{display:inline-block;background:#3b2f10;color:#fde68a;border:1px solid #92400e;padding:5px 9px;border-radius:999px;font-size:12px;margin-top:10px}
+  .quizbox{padding:20px}
+  .toprow{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);font-size:14px}
+  .question{font-size:24px;font-weight:800;line-height:1.25;margin:20px 0}
+  .answers{display:grid;gap:10px}
+  button{
+    width:100%;border:1px solid var(--line);border-radius:14px;padding:15px;
+    background:var(--panel2);color:white;font-size:16px;text-align:left;cursor:pointer
+  }
+  button:hover{border-color:#64748b}
+  button.good{background:#123b24;border-color:var(--good)}
+  button.bad{background:#451a1a;border-color:var(--bad)}
+  .primary{background:var(--accent);color:#111827;border:none;font-weight:800;text-align:center}
+  .secondary{background:transparent;text-align:center}
+  .progress{height:10px;background:#1e293b;border-radius:99px;overflow:hidden;margin:12px 0 4px}
+  .bar{height:100%;background:var(--accent);width:0%}
+  .hidden{display:none}
+  .result{text-align:center;padding:10px 0}
+  .result .big{font-size:48px;font-weight:900}
+  .small{font-size:13px;color:var(--muted)}
+  .footer{margin-top:24px;text-align:center;color:#64748b;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">💣 Bilgi Bombası</div>
+  <div class="sub">Oyna, skor kas, öğren.</div>
+
+  <div class="stats">
+    <div class="stat"><b id="xp">0</b><span>XP</span></div>
+    <div class="stat"><b id="streak">0</b><span>Doğru Seri</span></div>
+    <div class="stat"><b id="best">0</b><span>En İyi Seri</span></div>
+  </div>
+
+  <section id="home">
+    <button class="primary" style="margin-bottom:16px;font-size:17px;padding:16px" onclick="startQuiz()">▶ DEVAM ET — Başkentler Test 01</button>
+    <div class="grid">
+      <div class="card">
+        <h3>🌍 Dünya</h3>
+        <p>Başkentler, bayraklar, ülkeler ve daha fazlası.</p>
+        <span class="badge">İlk bölüm açık</span>
+        <button class="playbtn" onclick="openWorld()">OYNA →</button>
+      </div>
+
+      <div class="card">
+        <h3>🇹🇷 Türkiye</h3>
+        <p>İller, plakalar, ilçeler, harita konumları.</p>
+        <span class="badge">Yakında</span>
+      </div>
+
+      <div class="card">
+        <h3>🏺 Tarih</h3>
+        <p>Türk tarihi, Osmanlı, Cumhuriyet ve dünya tarihi.</p>
+        <span class="badge">Yakında</span>
+      </div>
+
+      <div class="card">
+        <h3>🎬 Sinema</h3>
+        <p>Filmler, oyuncular, yönetmenler ve sinema kültürü.</p>
+        <span class="badge">Yakında</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="world" class="hidden">
+    <div class="card">
+      <h3>🌐 Başkentler — Test 01</h3>
+      <p>10 soruluk demo test. Her doğru cevap +10 XP.</p>
+      <span class="badge">Boss hedefi: 10/10</span>
+      <button class="playbtn" onclick="startQuiz()">TESTE GİR →</button>
+    </div>
+    <div style="height:12px"></div>
+    <button class="secondary" onclick="goHome()">← Ana menü</button>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div class="quizbox">
+      <div class="toprow">
+        <span id="counter">Soru 1/10</span>
+        <span id="score">Skor: 0</span>
+      </div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div class="answers" id="answers"></div>
+    </div>
+  </section>
+
+  <section id="result" class="hidden">
+    <div class="quizbox result">
+      <div class="small">TEST TAMAMLANDI</div>
+      <div class="big" id="finalScore">0/10</div>
+      <h2 id="resultTitle">İyi başlangıç!</h2>
+      <p id="resultText" class="sub"></p>
+      <button class="primary" onclick="startQuiz()">Tekrar Oyna</button>
+      <div style="height:10px"></div>
+      <button class="secondary" onclick="openWorld()">Testlere Dön</button>
+    </div>
+  </section>
+
+  <div class="footer">Bilgi Bombası v0.1</div>
+</div>
+
+<script>
+const questions = [
+  {q:"Türkiye'nin başkenti aşağıdakilerden hangisidir?", a:"Ankara", o:["İstanbul","Ankara","İzmir","Bursa"]},
+  {q:"Fransa'nın başkenti aşağıdakilerden hangisidir?", a:"Paris", o:["Lyon","Marsilya","Paris","Nice"]},
+  {q:"Almanya'nın başkenti aşağıdakilerden hangisidir?", a:"Berlin", o:["Hamburg","Münih","Frankfurt","Berlin"]},
+  {q:"İtalya'nın başkenti aşağıdakilerden hangisidir?", a:"Roma", o:["Milano","Roma","Napoli","Torino"]},
+  {q:"Japonya'nın başkenti aşağıdakilerden hangisidir?", a:"Tokyo", o:["Osaka","Kyoto","Tokyo","Nagoya"]},
+  {q:"Kanada'nın başkenti aşağıdakilerden hangisidir?", a:"Ottawa", o:["Toronto","Montreal","Vancouver","Ottawa"]},
+  {q:"Avustralya'nın başkenti aşağıdakilerden hangisidir?", a:"Canberra", o:["Sydney","Melbourne","Canberra","Perth"]},
+  {q:"Brezilya'nın başkenti aşağıdakilerden hangisidir?", a:"Brasília", o:["Rio de Janeiro","São Paulo","Brasília","Salvador"]},
+  {q:"İspanya'nın başkenti aşağıdakilerden hangisidir?", a:"Madrid", o:["Barselona","Sevilla","Madrid","Valensiya"]},
+  {q:"Mısır'ın başkenti aşağıdakilerden hangisidir?", a:"Kahire", o:["İskenderiye","Kahire","Luksor","Gize"]}
+];
+
+let state = {
+  xp: Number(localStorage.getItem("bb_xp")||0),
+  best: Number(localStorage.getItem("bb_best")||0),
+  streak:0, score:0, index:0, locked:false
+};
+
+const $ = id => document.getElementById(id);
+
+function syncStats(){
+  $("xp").textContent=state.xp;
+  $("streak").textContent=state.streak;
+  $("best").textContent=state.best;
+}
+function show(id){
+  ["home","world","quiz","result"].forEach(x=>$(x).classList.add("hidden"));
+  $(id).classList.remove("hidden");
+}
+function goHome(){ show("home"); }
+function openWorld(){ show("world"); }
+
+function startQuiz(){
+  state.score=0; state.index=0; state.streak=0; state.locked=false;
+  syncStats(); show("quiz"); renderQuestion();
+}
+function shuffle(arr){ return [...arr].sort(()=>Math.random()-.5); }
+
+function renderQuestion(){
+  state.locked=false;
+  const item=questions[state.index];
+  $("counter").textContent=`Soru ${state.index+1}/${questions.length}`;
+  $("score").textContent=`Skor: ${state.score}`;
+  $("bar").style.width=`${(state.index/questions.length)*100}%`;
+  $("question").textContent=item.q;
+
+  const box=$("answers"); box.innerHTML="";
+  shuffle(item.o).forEach(opt=>{
+    const b=document.createElement("button");
+    b.textContent=opt;
+    b.onclick=()=>answer(b,opt,item.a);
+    box.appendChild(b);
+  });
+}
+
+function answer(btn,selected,correct){
+  if(state.locked) return;
+  state.locked=true;
+  [...$("answers").children].forEach(b=>{
+    if(b.textContent===correct) b.classList.add("good");
+  });
+
+  if(selected===correct){
+    state.score++;
+    state.streak++;
+    state.xp+=10;
+    btn.classList.add("good");
+    if(state.streak>state.best){
+      state.best=state.streak;
+      localStorage.setItem("bb_best",state.best);
+    }
+    localStorage.setItem("bb_xp",state.xp);
+  } else {
+    state.streak=0;
+    btn.classList.add("bad");
+    const wrong=JSON.parse(localStorage.getItem("bb_wrong")||"[]");
+    wrong.push(questions[state.index].q);
+    localStorage.setItem("bb_wrong",JSON.stringify(wrong.slice(-100)));
+  }
+  syncStats();
+
+  setTimeout(()=>{
+    state.index++;
+    if(state.index<questions.length) renderQuestion();
+    else finish();
+  },700);
+}
+
+function finish(){
+  $("bar").style.width="100%";
+  show("result");
+  $("finalScore").textContent=`${state.score}/${questions.length}`;
+
+  if(state.score===10){
+    $("resultTitle").textContent="🏆 BAŞKENTLER USTASI!";
+    $("resultText").textContent="Kusursuz skor. Boss temizlendi.";
+  } else if(state.score>=8){
+    $("resultTitle").textContent="🔥 Çok iyi!";
+    $("resultText").textContent="Bir tekrar daha ve 10/10 geliyor.";
+  } else if(state.score>=5){
+    $("resultTitle").textContent="💪 Gelişiyor!";
+    $("resultText").textContent="Yanlışlar kaydedildi. Tekrarla güçlenecek.";
+  } else {
+    $("resultTitle").textContent="🧠 Antrenman zamanı!";
+    $("resultText").textContent="Sorun değil; oyun zaten öğrenmek için var.";
+  }
+}
+syncStats();
+</script>
+</body>
+</html>
